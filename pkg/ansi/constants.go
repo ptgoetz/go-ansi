@@ -1,12 +1,17 @@
 package ansi
 
+// CursorDirection represents the direction a cursor can travel (Up, Down, Left, Right)
 type CursorDirection string
 
 const (
-	CursorUp    CursorDirection = "A"
-	CursorDown  CursorDirection = "B"
+	// CursorUp moves the cursor up.
+	CursorUp CursorDirection = "A"
+	// CursorDown moves the cursor down.
+	CursorDown CursorDirection = "B"
+	// CursorRight moves the cursor right.
 	CursorRight CursorDirection = "C"
-	CursorLeft  CursorDirection = "D"
+	// CursorLeft moves the cursor left.
+	CursorLeft CursorDirection = "D"
 )
 
 // Style constants
