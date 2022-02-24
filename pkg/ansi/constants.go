@@ -48,7 +48,9 @@ const (
 )
 
 const (
+	// Start is the ANSI code to start an instruction
 	Start = "\033["
+	// Reset is an ANSI instruction that will restore all ANSI formatting defaults
 	Reset = Start + "0m"
 )
 
