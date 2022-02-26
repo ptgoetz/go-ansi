@@ -55,44 +55,26 @@ const (
 )
 
 const (
-	// ColorBlack represents a black foreground
-	ColorBlack = normalForeground + black
-	// ColorRed represents a red foreground
-	ColorRed = normalForeground + red
-	// ColorGreen represents a green foreground
-	ColorGreen = normalForeground + green
-	// ColorYellow represents a yellow foreground
-	ColorYellow = normalForeground + yellow
-	// ColorBlue represents a blue foreground
-	ColorBlue = normalForeground + blue
-	// ColorMagenta represents a magenta foreground
+	ColorBlack   = normalForeground + black
+	ColorRed     = normalForeground + red
+	ColorGreen   = normalForeground + green
+	ColorYellow  = normalForeground + yellow
+	ColorBlue    = normalForeground + blue
 	ColorMagenta = normalForeground + magenta
-	// ColorCyan represents a cyan foreground
-	ColorCyan = normalForeground + cyan
-	// ColorWhite represents a white foreground
-	ColorWhite = normalForeground + white
-	// ColorRGB is an ANSI code to render a color in `r;g;b;` format.
-	ColorRGB = 38
-	// ColorDefault represents the default foreground
+	ColorCyan    = normalForeground + cyan
+	ColorWhite   = normalForeground + white
+	ColorRGB     = 38
 	ColorDefault = normalForeground + none
 
-	// ColorBrightBlack represents a bright black foreground
-	ColorBrightBlack = brightForeground + black
-	// ColorBrightRed represents a bright red foreground
-	ColorBrightRed = brightForeground + red
-	// ColorBrightGreen represents a bright green foreground
-	ColorBrightGreen = brightForeground + green
-	// ColorBrightYellow represents a bright yellow foreground
-	ColorBrightYellow = brightForeground + yellow
-	// ColorBrightBlue represents a bright blue foreground
-	ColorBrightBlue = brightForeground + blue
-	// ColorBrightMagenta represents a bright magenta foreground
+	ColorBrightBlack   = brightForeground + black
+	ColorBrightRed     = brightForeground + red
+	ColorBrightGreen   = brightForeground + green
+	ColorBrightYellow  = brightForeground + yellow
+	ColorBrightBlue    = brightForeground + blue
 	ColorBrightMagenta = brightForeground + magenta
-	// ColorBrightCyan represents a bright cyan foreground
-	ColorBrightCyan = brightForeground + cyan
-	// ColorBrightWhite represents a bright white foreground
-	ColorBrightWhite = brightForeground + white
-	
+	ColorBrightCyan    = brightForeground + cyan
+	ColorBrightWhite   = brightForeground + white
+
 	ColorBgBlack   = normalBackground + black
 	ColorBgRed     = normalBackground + red
 	ColorBgGreen   = normalBackground + green
