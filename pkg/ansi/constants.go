@@ -39,7 +39,7 @@ const (
 	none = 9
 )
 
-// ANSI foreground/background constants
+// ANSI foreground/background code constants
 const (
 	normalForeground = 30
 	normalBackground = 40
@@ -54,6 +54,7 @@ const (
 	Reset = Start + "0m"
 )
 
+// ANSI foreground/background constants
 const (
 	ColorBlack   = normalForeground + black
 	ColorRed     = normalForeground + red
