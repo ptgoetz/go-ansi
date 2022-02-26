@@ -1,22 +1,18 @@
-package main
+package component
 
 import (
 	"fmt"
-	"github.com/ptgoetz/go-ansi/pkg/ansi"
+	ansi2 "github.com/ptgoetz/go-ansi/pkg/ansi"
 	"os"
 	"time"
 )
 
-func main() {
-	demoProgressPercent()
-}
-
 func demoProgressPercent() {
-	w := ansi.NewWriter(os.Stderr)
+	w := ansi2.NewWriter(os.Stderr)
 	backspaceLen := -1
 	// set the prompt style and color, use default background
-	//w.SetStyle(ansi.StyleBold)
-	w.SetForeground(255, 0, 0)
+	w.SetStyle(ansi2.StyleUnderline)
+	w.SetForeground(255/2, 255/2, 255/2)
 	w.Print("Progress: ")
 
 	// Reset style to defaults
@@ -25,7 +21,7 @@ func demoProgressPercent() {
 	w.SetForeground(255, 255, 255)
 	for i := 0; i <= 100; i++ {
 		s := fmt.Sprintf("%d", i) + "%"
-		w.MoveCursor(ansi.CursorLeft, backspaceLen)
+		w.MoveCursor(ansi2.CursorLeft, backspaceLen)
 		w.Print(s)
 		backspaceLen = len(s)
 
@@ -35,9 +31,9 @@ func demoProgressPercent() {
 	w.Print("\n")
 
 	//w.SetStyle(ansi.StyleUnderline)
-	w.SetStyle(ansi.ColorGreen)
-	w.Print("Foo.\n")
+	w.SetStyle(ansi2.ColorGreen)
+	w.Print("Dog Balls.\n")
 	w.ResetStyle()
-	w.Print("Bar.")
+	w.Print("Cat Piss.")
 	w.Print("\n")
 }
