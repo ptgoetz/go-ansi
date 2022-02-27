@@ -13,8 +13,9 @@ func IsTerminal() bool {
 	return (fileInfo.Mode() & os.ModeCharDevice) != 0
 }
 
-// IsAnsiTerminal detects if the current context is a TTY by calling GetTerminalDimensions.
-// If an error is returned, or either rows or cols is zero, it's assumed that it's not a TTY.
+// IsAnsiTerminal detects if the current context is an ANSI terminal by calling GetTerminalDimensions.
+// If an error is returned, or either rows or cols is zero, it's assumed that it's not an
+// ANSI terminal.
 func IsAnsiTerminal() bool {
 	rows, cols, err := GetTerminalDimensions()
 	return err == nil && rows != 0 && cols != 0
