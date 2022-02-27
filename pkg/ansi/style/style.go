@@ -4,8 +4,6 @@ import (
 	"github.com/ptgoetz/go-ansi/pkg/ansi"
 )
 
-const ()
-
 // Set represents a set of Style flags that can be toggled
 type Set struct {
 	none          bool
