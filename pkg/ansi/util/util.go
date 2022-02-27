@@ -6,6 +6,8 @@ import (
 	"syscall"
 )
 
+// IsTerminal determines whether the current context is a terminal. Note that a terminal may not be
+// an ANSI terminal.
 func IsTerminal() bool {
 	fileInfo, _ := os.Stdout.Stat()
 	return (fileInfo.Mode() & os.ModeCharDevice) != 0
