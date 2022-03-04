@@ -11,8 +11,9 @@ For example, there are a number of libraries that focus primarily on TTY color, 
 navigation. Others overly abstract away, and block access to, the lower level ANSI code API.
 
 ### Existing Golang ANSI Libraries
-* [https://github.com/mgutz/ansi](https://github.com/mgutz/ansi)
-* [https://github.com/k0kubun/go-ansi](https://github.com/k0kubun/go-ansi)
+* [https://github.com/mgutz/ansi](https://github.com/mgutz/ansi) (Color, Style)
+* [https://github.com/k0kubun/go-ansi](https://github.com/k0kubun/go-ansi) (Color)
+* [https://github.com/ahmetb/go-cursor](https://github.com/ahmetb/go-cursor) (Color, Cursor)
 
 ## Proposal
 An OSS, liberally licensed (ASL v2), golang library that supports ANSI TTY color, style, and cursor navigation would 
