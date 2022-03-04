@@ -13,7 +13,6 @@ navigation. Others overly abstract away, and block access to, the lower level AN
 ### Existing Golang ANSI Libraries
 * [https://github.com/mgutz/ansi](https://github.com/mgutz/ansi)
 * [https://github.com/k0kubun/go-ansi](https://github.com/k0kubun/go-ansi)
-* [https://github.com/k0kubun/go-ansi](https://github.com/k0kubun/go-ansi)
 
 ## Proposal
 An OSS, liberally licensed (ASL v2), golang library that supports ANSI TTY color, style, and cursor navigation would 
