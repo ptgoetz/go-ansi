@@ -19,11 +19,11 @@ func main() {
 	signal.Notify(sigwinch, syscall.SIGWINCH)
 	go func() {
 		for {
-			if _, ok := <-sigwinch; !ok {
-				return
+			select {
+			case <-sigwinch:
+				updateWindowSize(writer)
+				//default:
 			}
-
-			_ = updateWindowSize(writer)
 		}
 	}()
 
