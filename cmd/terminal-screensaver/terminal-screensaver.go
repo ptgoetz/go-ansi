@@ -32,24 +32,16 @@ func main() {
 	}
 }
 
-func getConsoleDimensions() (rows int, cols int, err error) {
-	ws, err := unix.IoctlGetWinsize(syscall.Stdout, unix.TIOCGWINSZ)
-	if err != nil {
-		return 0, 0, err
-	}
-	cols = int(ws.Col)
-	rows = int(ws.Row)
-	return rows, cols, nil
-}
-
 func updateWindowSize(writer *ansi.Writer) error {
 	writer.ClearScreen()
 	writer.SetCursorPos(0, 0)
-	rows, cols, err := getConsoleDimensions()
+	ws, err := unix.IoctlGetWinsize(syscall.Stdout, unix.TIOCGWINSZ)
 	if err != nil {
 		return err
 	}
 
+	cols := int(ws.Col)
+	rows := int(ws.Row)
 	fmt.Printf("Rows: %d, Cols: %d", rows, cols)
 
 	fmt.Print(ansi.SetCursorPos(rows, 0)) // move the cursor to the bottom of the screen
