@@ -64,6 +64,18 @@ func (w *Writer) RestoreCursor() {
 	fmt.Fprint(w.ioWriter, RestoreCursor())
 }
 
+func (w *Writer) SetCursorVisible(visible bool) {
+	fmt.Fprint(w.ioWriter, SetCursorVisible(visible))
+}
+
+func (w *Writer) ShowCursor() {
+	fmt.Fprint(w.ioWriter, SetCursorVisible(true))
+}
+
+func (w *Writer) HideCursor() {
+	fmt.Fprint(w.ioWriter, SetCursorVisible(false))
+}
+
 // ClearScreen tells the TTY to clear the screen.
 func (w *Writer) ClearScreen() {
 	fmt.Fprint(w.ioWriter, ClearScreen())
@@ -144,6 +156,22 @@ func ClearLine() string {
 func ClearLineRemainder() string {
 	retval := fmt.Sprintf("%s%s", Start, "K")
 	return retval
+}
+
+func SetCursorVisible(visible bool) string {
+	if visible {
+		return fmt.Sprintf("%s%s", Start, "?25h")
+	} else {
+		return fmt.Sprintf("%s%s", Start, "?25l")
+	}
+}
+
+func ShowCursor() string {
+	return SetCursorVisible(true)
+}
+
+func HideCursor() string {
+	return SetCursorVisible(false)
 }
 
 // SetCursorPos moves the TTY cursor position to row, col.
