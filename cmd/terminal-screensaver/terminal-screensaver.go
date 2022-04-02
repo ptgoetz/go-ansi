@@ -16,11 +16,9 @@ func main() {
 
 	writer := ansi.NewWriter(os.Stdout)
 
-	//defer writer.ClearScreen()
-
 	rows, cols, _ := getConsoleDimensions()
-	_ = updateWindowSize(writer, rows, cols)
-	//
+	_ = initWindow(writer, rows, cols)
+
 	signalInterrupt := make(chan os.Signal, 1)
 	defer close(signalInterrupt)
 	signal.Notify(signalInterrupt, syscall.SIGINT)
@@ -29,12 +27,16 @@ func main() {
 	defer close(signalWinSizeChange)
 	signal.Notify(signalWinSizeChange, syscall.SIGWINCH)
 
+	resizeChan := make(chan [2]int, 1)
+
+	// SIGWINCH, SIGINT goroutine
 	go func() {
 		for {
 			select {
 			case <-signalWinSizeChange:
 				rows, cols, _ := getConsoleDimensions()
-				_ = updateWindowSize(writer, rows, cols)
+				resizeChan <- [2]int{rows, cols}
+				//_ = initWindow(writer, rows, cols)
 			case <-signalInterrupt:
 				resetConsole(writer)
 				os.Exit(0)
@@ -45,6 +47,14 @@ func main() {
 
 	go func() {
 		for {
+			select {
+			case dims := <-resizeChan:
+				rows = dims[0]
+				cols = dims[1]
+				resetConsole(writer)
+				initWindow(writer, rows, cols)
+			default:
+			}
 			// create a random row/col position
 			randRow := rand.Intn(rows)
 			randCol := rand.Intn(cols)
@@ -84,12 +94,12 @@ func getConsoleDimensions() (rows int, cols int, err error) {
 	if err != nil {
 		return 0, 0, err
 	}
-	cols = int(ws.Col)
-	rows = int(ws.Row)
+	cols = int(ws.Col) + 1
+	rows = int(ws.Row) + 1
 	return rows, cols, nil
 }
 
-func updateWindowSize(writer *ansi.Writer, rows int, cols int) error {
+func initWindow(writer *ansi.Writer, rows int, cols int) error {
 	writer.ResetStyle()
 	writer.ClearScreen()
 	//writer.SetCursorPos(0, 0)
@@ -102,9 +112,8 @@ func updateWindowSize(writer *ansi.Writer, rows int, cols int) error {
 
 //var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 //var letterRunes = []rune("01")
-var letterRunes = []rune("0123456789!@#$%^&*()?><~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+var letterRunes = []rune("0123456789!@#$%^&*()?><~ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 func RandomRune() string {
-
 	return string(letterRunes[rand.Intn(len(letterRunes))])
 }
