@@ -6,94 +6,101 @@ import (
 	"strings"
 )
 
-// Writer defines low-level methods for ANSI formatting to a TTY represented by an io.Writer
-type Writer struct {
+// Console defines low-level methods for ANSI formatting to a TTY represented by an io.Writer
+type Console struct {
 	ioWriter io.Writer
 }
 
-// NewWriter return a pointer to an Writer given an io.Writer reference
-func NewWriter(writer io.Writer) *Writer {
-	return &Writer{
+// NewConsole return a pointer to an Console given an io.Writer reference
+func NewConsole(writer io.Writer) *Console {
+	return &Console{
 		ioWriter: writer,
 	}
 }
 
 // SetStyle sets the TTY's style to the given set of codes.
-func (w *Writer) SetStyle(ansiCodes ...int) {
+func (w *Console) SetStyle(ansiCodes ...int) {
 	codeStr := intArrayToDelimitedString(ansiCodes, ";")
 	fmt.Fprint(w.ioWriter, fmt.Sprintf("%s%sm", Start, codeStr))
 }
 
 // SetForeground sets the TTY foreground color given RGB values
-func (w *Writer) SetForeground(r int, g int, b int) {
+func (w *Console) SetForeground(r int, g int, b int) {
 	fmt.Fprint(w.ioWriter, RGBForeground("", false, r, g, b))
 }
 
 // SetBackground sets the TTY foreground color given RGB values
-func (w *Writer) SetBackground(r int, g int, b int) {
+func (w *Console) SetBackground(r int, g int, b int) {
 	fmt.Fprint(w.ioWriter, RGBBackground("", false, r, g, b))
 }
 
 // ResetStyle returns the TTY styles to their defaults.
-func (w *Writer) ResetStyle() {
+func (w *Console) ResetStyle() {
 	fmt.Fprint(w.ioWriter, Reset)
 }
 
 // MoveCursor moves the TTY cursor `places` in the given CursorDirection
-func (w *Writer) MoveCursor(direction CursorDirection, places int) {
+func (w *Console) MoveCursor(direction CursorDirection, places int) {
 	fmt.Fprint(w.ioWriter, MoveCursor(direction, places))
 }
 
 // Print writes a string to the underlying io.Writer
-func (w *Writer) Print(s string) {
+func (w *Console) Print(s string) {
 	fmt.Fprint(w.ioWriter, s)
 }
 
 // SetCursorPos moves the TTY cursor position to row, col.
-func (w *Writer) SetCursorPos(row int, col int) {
+func (w *Console) SetCursorPos(row int, col int) {
 	fmt.Fprint(w.ioWriter, SetCursorPos(row, col))
 }
 
 // SaveCursor tells the TTY to save the current cursor position.
-func (w *Writer) SaveCursor() {
+func (w *Console) SaveCursor() {
 	fmt.Fprint(w.ioWriter, SaveCursor())
 }
 
 // RestoreCursor tells the TTY to restore the last saved  cursor position.
-func (w *Writer) RestoreCursor() {
+func (w *Console) RestoreCursor() {
 	fmt.Fprint(w.ioWriter, RestoreCursor())
 }
 
-func (w *Writer) SetCursorVisible(visible bool) {
+func (w *Console) SetCursorVisible(visible bool) {
 	fmt.Fprint(w.ioWriter, SetCursorVisible(visible))
 }
 
-func (w *Writer) ShowCursor() {
+func (w *Console) ShowCursor() {
 	fmt.Fprint(w.ioWriter, SetCursorVisible(true))
 }
 
-func (w *Writer) HideCursor() {
+func (w *Console) HideCursor() {
 	fmt.Fprint(w.ioWriter, SetCursorVisible(false))
 }
 
 // ClearScreen tells the TTY to clear the screen.
-func (w *Writer) ClearScreen() {
+func (w *Console) ClearScreen() {
 	fmt.Fprint(w.ioWriter, ClearScreen())
 }
 
 // ClearScreenRemainder tells the TTY to clear the screen from the cursor position.
-func (w *Writer) ClearScreenRemainder() {
+func (w *Console) ClearScreenRemainder() {
 	fmt.Fprint(w.ioWriter, ClearScreenRemainder())
 }
 
 // ClearLine tells the TTY to clear the current line.
-func (w *Writer) ClearLine() {
+func (w *Console) ClearLine() {
 	fmt.Fprint(w.ioWriter, ClearLine())
 }
 
 // ClearLineRemainder tells the TTY to clear the current line from the cursor position.
-func (w *Writer) ClearLineRemainder() {
+func (w *Console) ClearLineRemainder() {
 	fmt.Fprint(w.ioWriter, ClearLineRemainder())
+}
+
+func (w *Console) Reset() {
+	w.ResetStyle()
+	w.ClearScreen()
+	w.SetCursorPos(0, 0)
+	w.SetCursorVisible(true)
 }
 
 func intArrayToDelimitedString(a []int, delim string) string {

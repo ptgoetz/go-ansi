@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	writer := ansi.NewWriter(os.Stdout)
+	writer := ansi.NewConsole(os.Stdout)
 	_ = updateWindowSize(writer)
 	//
 	sigwinch := make(chan os.Signal, 1) // Set signal handler
@@ -42,7 +42,7 @@ func getConsoleDimensions() (rows int, cols int, err error) {
 	return rows, cols, nil
 }
 
-func updateWindowSize(writer *ansi.Writer) error {
+func updateWindowSize(writer *ansi.Console) error {
 	writer.ClearScreen()
 	writer.SetCursorPos(0, 0)
 	rows, cols, err := getConsoleDimensions()

@@ -8,7 +8,7 @@ import (
 )
 
 func demoProgressPercent() {
-	w := ansi2.NewWriter(os.Stderr)
+	w := ansi2.NewConsole(os.Stderr)
 	backspaceLen := -1
 	// set the prompt style and color, use default background
 	w.SetStyle(ansi2.StyleUnderline)

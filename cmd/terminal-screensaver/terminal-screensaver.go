@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/ptgoetz/go-ansi/pkg/ansi"
 	"golang.org/x/sys/unix"
+	"log"
 	"math/rand"
 	"os"
 	"os/signal"
@@ -11,13 +13,37 @@ import (
 	"time"
 )
 
+type config struct {
+	// flags
+
+	// params
+	delay         time.Duration
+	remainingArgs []string
+	runes         string
+}
+
+var args config
+
+func parseArgs() config {
+	args = config{}
+	flag.DurationVar(&args.delay, "delay", 25*time.Millisecond, "The delay between console updates.")
+	flag.StringVar(&args.runes, "charset", "123ABC", "Character to use for display.")
+
+	log.Printf("Parsing args : %v", os.Args)
+	flag.Parse()
+	args.remainingArgs = flag.Args()
+
+	return args
+}
+
 func main() {
+	config := parseArgs()
 	rand.Seed(time.Now().UnixNano())
 
-	writer := ansi.NewWriter(os.Stdout)
+	console := ansi.NewConsole(os.Stdout)
 
 	rows, cols, _ := getConsoleDimensions()
-	_ = initWindow(writer, rows, cols)
+	_ = initWindow(console, rows, cols)
 
 	signalInterrupt := make(chan os.Signal, 1)
 	defer close(signalInterrupt)
@@ -36,9 +62,9 @@ func main() {
 			case <-signalWinSizeChange:
 				rows, cols, _ := getConsoleDimensions()
 				resizeChan <- [2]int{rows, cols}
-				//_ = initWindow(writer, rows, cols)
+				//_ = initWindow(console, rows, cols)
 			case <-signalInterrupt:
-				resetConsole(writer)
+				resetConsole(console)
 				os.Exit(0)
 				//default:
 			}
@@ -51,14 +77,14 @@ func main() {
 			case dims := <-resizeChan:
 				rows = dims[0]
 				cols = dims[1]
-				resetConsole(writer)
-				initWindow(writer, rows, cols)
+				resetConsole(console)
+				initWindow(console, rows, cols)
 			default:
 			}
 			// create a random row/col position
 			randRow := rand.Intn(rows)
 			randCol := rand.Intn(cols)
-			writer.SetCursorPos(randRow, randCol)
+			console.SetCursorPos(randRow, randCol)
 
 			// create a random rgb color
 			r := rand.Intn(255)
@@ -66,26 +92,26 @@ func main() {
 			b := rand.Intn(255)
 
 			// set the cursor position and background color
-			writer.SetBackground(r, g, b)
-			writer.SetForeground(255-r, 255-g, 255-b)
-			writer.Print(RandomRune())
+			console.SetBackground(r, g, b)
+			console.SetForeground(255-r, 255-g, 255-b)
+			console.Print(RandomRune(config.runes))
 
 			// sleep a bit
-			time.Sleep(25 * time.Millisecond)
+			time.Sleep(config.delay)
 		}
 
 	}()
 
 	for {
-		time.Sleep(time.Hour)
+		//time.Sleep(time.Hour)
 	}
 }
 
-func resetConsole(writer *ansi.Writer) {
-	writer.ResetStyle()
-	writer.ClearScreen()
-	writer.SetCursorPos(0, 0)
-	writer.SetCursorVisible(true)
+func resetConsole(console *ansi.Console) {
+	console.ResetStyle()
+	console.ClearScreen()
+	console.SetCursorPos(0, 0)
+	console.SetCursorVisible(true)
 
 }
 
@@ -99,11 +125,11 @@ func getConsoleDimensions() (rows int, cols int, err error) {
 	return rows, cols, nil
 }
 
-func initWindow(writer *ansi.Writer, rows int, cols int) error {
-	writer.ResetStyle()
-	writer.ClearScreen()
-	//writer.SetCursorPos(0, 0)
-	writer.SetCursorVisible(false)
+func initWindow(console *ansi.Console, rows int, cols int) error {
+	console.ResetStyle()
+	console.ClearScreen()
+	//console.SetCursorPos(0, 0)
+	console.SetCursorVisible(false)
 	//fmt.Printf("Rows: %d, Cols: %d", rows, cols)
 
 	fmt.Print(ansi.SetCursorPos(rows, 0)) // move the cursor to the bottom of the screen
@@ -112,8 +138,8 @@ func initWindow(writer *ansi.Writer, rows int, cols int) error {
 
 //var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 //var letterRunes = []rune("01")
-var letterRunes = []rune("0123456789!@#$%^&*()?><~ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+//var letterRunes = []rune("0123456789!@#$%^&*()?><~ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-func RandomRune() string {
-	return string(letterRunes[rand.Intn(len(letterRunes))])
+func RandomRune(charset string) string {
+	return string(charset[rand.Intn(len(charset))])
 }

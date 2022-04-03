@@ -12,7 +12,7 @@ func main() {
 }
 
 func demoProgressPercent() {
-	w := ansi.NewWriter(os.Stderr)
+	w := ansi.NewConsole(os.Stderr)
 	backspaceLen := -1
 	// set the prompt style and color, use default background
 	//w.SetStyle(ansi.StyleBold)
