@@ -64,7 +64,7 @@ func main() {
 				resizeChan <- [2]int{rows, cols}
 				//_ = initWindow(console, rows, cols)
 			case <-signalInterrupt:
-				resetConsole(console)
+				console.Reset()
 				os.Exit(0)
 				//default:
 			}
@@ -77,7 +77,7 @@ func main() {
 			case dims := <-resizeChan:
 				rows = dims[0]
 				cols = dims[1]
-				resetConsole(console)
+				console.Reset()
 				initWindow(console, rows, cols)
 			default:
 			}
@@ -105,14 +105,6 @@ func main() {
 	for {
 		//time.Sleep(time.Hour)
 	}
-}
-
-func resetConsole(console *ansi.Console) {
-	console.ResetStyle()
-	console.ClearScreen()
-	console.SetCursorPos(0, 0)
-	console.SetCursorVisible(true)
-
 }
 
 func getConsoleDimensions() (rows int, cols int, err error) {
