@@ -1,8 +1,11 @@
 package ansi
 
 import (
+	"bufio"
 	"fmt"
+	"github.com/ptgoetz/go-ansi/pkg/ansi/color"
 	"io"
+	"os"
 	"strings"
 )
 
@@ -18,10 +21,33 @@ func NewConsole(writer io.Writer) *Console {
 	}
 }
 
+func (w *Console) Prompt(message string, a ...interface{}) (int, error) {
+	fmt.Fprint(w.ioWriter, message)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	err := scanner.Err()
+	if err != nil {
+		return 0, err
+	}
+	val := scanner.Text()
+
+	return fmt.Sscan(val, a...)
+}
+
 // SetStyle sets the TTY's style to the given set of codes.
 func (w *Console) SetStyle(ansiCodes ...int) {
 	codeStr := intArrayToDelimitedString(ansiCodes, ";")
 	fmt.Fprint(w.ioWriter, fmt.Sprintf("%s%sm", Start, codeStr))
+}
+
+// SetFgColor sets the TTY foreground to the given color.Color
+func (w *Console) SetFgColor(c color.Color) {
+	fmt.Fprint(w.ioWriter, RGBForeground("", false, c.R(), c.G(), c.B()))
+}
+
+// SetBgColor sets the TTY background to the given color.Color
+func (w *Console) SetBgColor(c color.Color) {
+	fmt.Fprint(w.ioWriter, RGBBackground("", false, c.R(), c.G(), c.B()))
 }
 
 // SetForeground sets the TTY foreground color given RGB values
@@ -29,7 +55,7 @@ func (w *Console) SetForeground(r int, g int, b int) {
 	fmt.Fprint(w.ioWriter, RGBForeground("", false, r, g, b))
 }
 
-// SetBackground sets the TTY foreground color given RGB values
+// SetBackground sets the TTY background color given RGB values
 func (w *Console) SetBackground(r int, g int, b int) {
 	fmt.Fprint(w.ioWriter, RGBBackground("", false, r, g, b))
 }
