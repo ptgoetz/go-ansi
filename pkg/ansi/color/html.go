@@ -26,26 +26,26 @@ var (
 
 	// Orange Colors
 
-	//LightSalmon = New(0, 0, 0)
-	Coral      = New(0, 0, 0)
-	Tomato     = New(0, 0, 0)
-	OrangeRed  = New(0, 0, 0)
-	DarkOrange = New(0, 0, 0)
-	Orange     = New(0, 0, 0)
+	//LightSalmon = New(255, 160, 122)
+	Coral      = New(255, 127, 80)
+	Tomato     = New(255, 99, 71)
+	OrangeRed  = New(255, 69, 0)
+	DarkOrange = New(255, 140, 0)
+	Orange     = New(255, 165, 0)
 
 	// Yellow Colors
 
-	Gold                 = New(0, 0, 0)
-	Yellow               = New(0, 0, 0)
-	LightYellow          = New(0, 0, 0)
-	LemonChiffon         = New(0, 0, 0)
-	LightGoldenrodYellow = New(0, 0, 0)
-	PapayaWhip           = New(0, 0, 0)
-	Moccasin             = New(0, 0, 0)
-	PeachPuff            = New(0, 0, 0)
-	PaleGoldenrod        = New(0, 0, 0)
-	Khaki                = New(0, 0, 0)
-	DarkKhaki            = New(0, 0, 0)
+	Gold                 = New(255, 215, 0)
+	Yellow               = New(255, 255, 0)
+	LightYellow          = New(255, 255, 224)
+	LemonChiffon         = New(255, 250, 205)
+	LightGoldenrodYellow = New(250, 250, 210)
+	PapayaWhip           = New(255, 239, 213)
+	Moccasin             = New(255, 228, 181)
+	PeachPuff            = New(255, 218, 185)
+	PaleGoldenrod        = New(238, 232, 170)
+	Khaki                = New(240, 230, 140)
+	DarkKhaki            = New(189, 183, 107)
 
 	// Purple Colors
 
