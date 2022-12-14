@@ -4,9 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/ptgoetz/go-ansi/pkg/ansi/color"
+	"golang.org/x/sys/unix"
 	"io"
 	"os"
 	"strings"
+	"syscall"
 )
 
 // Console defines low-level methods for ANSI formatting to a TTY represented by an io.Writer
@@ -223,4 +225,15 @@ func RGBForeground(s string, reset bool, r int, g int, b int) string {
 // the formatted value of `s` as a string.
 func RGBBackground(s string, reset bool, r int, g int, b int) string {
 	return Format(s, reset, ColorBgRGB, 2, r, g, b)
+}
+
+// GetConoleDimension returns the ROWS, COLLUMNS dimentions (as `int`s) for the current console state.
+func GetConoleDimension() (rows int, cols int, err error) {
+	ws, err := unix.IoctlGetWinsize(syscall.Stdout, unix.TIOCGWINSZ)
+	if err != nil {
+		return 0, 0, err
+	}
+	cols = int(ws.Col) + 1
+	rows = int(ws.Row) + 1
+	return rows, cols, nil
 }

@@ -96,3 +96,6 @@ const (
 	ColorBgBrightCyan    = brightBackground + cyan
 	ColorBgBrightWhite   = brightBackground + white
 )
+
+// ANCII Constants
+const ()

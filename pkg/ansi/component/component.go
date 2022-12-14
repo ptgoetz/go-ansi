@@ -4,10 +4,11 @@ import (
 	"fmt"
 	ansi2 "github.com/ptgoetz/go-ansi/pkg/ansi"
 	"os"
+	"strings"
 	"time"
 )
 
-func demoProgressPercent() {
+func DemoProgressPercent() {
 	w := ansi2.NewConsole(os.Stderr)
 	backspaceLen := -1
 	// set the prompt style and color, use default background
@@ -36,4 +37,11 @@ func demoProgressPercent() {
 	w.ResetStyle()
 	w.Print("Cat Piss.")
 	w.Print("\n")
+}
+
+func DemoPanel() {
+	//w := ansi2.NewConsole(os.Stderr)
+	fmt.Println(CORNER_UPPER_LEFT + HORIZONTAL_LINE + "LABEL" + strings.Repeat(HORIZONTAL_LINE, 5) + CORNER_UPPER_RIGHT)
+	fmt.Println(VERTICAL_LINE + "  foo      " + VERTICAL_LINE)
+	fmt.Println(CORNER_LOWER_LEFT + strings.Repeat(HORIZONTAL_LINE, 11) + CORNER_LOWER_RIGHT)
 }
