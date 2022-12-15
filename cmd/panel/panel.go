@@ -9,7 +9,8 @@ import (
 func main() {
 	//component.DemoPanel
 	console := ansi.NewConsole(os.Stdout)
-	panel := component.NewPanelWithLabel("ERROR", "ACCESS DENIED, FARTKNOCKER!", 80, 10)
+
+	panel := component.NewPanelWithLabel("ERROR", "ACCESS DENIED, FARTKNOCKER!", -2, 10)
 
 	panel.Render(console)
 }
