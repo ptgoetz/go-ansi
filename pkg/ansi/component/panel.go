@@ -66,13 +66,15 @@ func (p Panel) Render(c *ansi.Console) {
 	var panelWidth = p.Width
 	// figure out if we're filling the width of the console or fitting message width
 
-	if panelWidth == -2 {
+	if panelWidth == FIT_CONSOLE_WIDTH {
 		var err error
 		_, panelWidth, err = ansi.GetConoleDimension()
 		panelWidth--
 		if err != nil {
 			log.Fatalln(err)
 		}
+	} else if panelWidth == FIT_MESSAGE_WIDTH {
+		panelWidth = len(p.Message) + 2
 	}
 
 	labelWidth := len(p.Label)
