@@ -63,6 +63,7 @@ func (p Panel) Render(c *ansi.Console) {
 	upperRightOffset := 1 // corner char
 	lowerLeftOffset := 1  // corner char
 	lowerRightOffset := 1 // corner char
+
 	var panelWidth = p.Width
 	// figure out if we're filling the width of the console or fitting message width
 
@@ -74,13 +75,14 @@ func (p Panel) Render(c *ansi.Console) {
 			log.Fatalln(err)
 		}
 	} else if panelWidth == FIT_MESSAGE_WIDTH {
-		panelWidth = len(p.Message) + 2
+		padLeng := 2
+		panelWidth = len(p.Message) + padLeng
 	}
 
 	labelWidth := len(p.Label)
-	upperLineWidth := panelWidth - labelWidth - upperLeftOffset - upperRightOffset
+	upperLineWidth := panelWidth - labelWidth - upperLeftOffset - upperRightOffset + 2 // TODO magic number
 	upperLine := strings.Repeat(p.HorizontalLine, upperLineWidth)
-	lowerLineWidth := panelWidth - lowerLeftOffset - lowerRightOffset
+	lowerLineWidth := panelWidth - lowerLeftOffset - lowerRightOffset + 2 // TODO magic number
 	lowerLine := strings.Repeat(p.HorizontalLine, lowerLineWidth)
 	// render top line
 	c.SetFgColor(*p.BorderColor)
@@ -97,7 +99,9 @@ func (p Panel) Render(c *ansi.Console) {
 	remainderPad := strings.Repeat(" ", remainderWidth)
 	c.Print(p.VerticalLine)
 	c.ResetStyle()
+	c.Print(" ") // left pad
 	c.Print(p.Message + remainderPad)
+	c.Print(" ") // right pad
 	c.SetFgColor(*p.BorderColor)
 	c.Print(p.VerticalLine)
 	c.Print("\n")

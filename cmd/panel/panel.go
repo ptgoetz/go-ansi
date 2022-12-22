@@ -10,7 +10,7 @@ import (
 func main() {
 	c := ansi.NewConsole(os.Stdout)
 
-	panel := component.NewPanelWithLabel("FATAL", " ACCESS DENIED! ", -1, 5)
+	panel := component.NewPanelWithLabel("FATAL", "ACCESS DENIED!", -1, 5)
 
 	panel.BorderColor = color.Red
 	panel.Render(c)
