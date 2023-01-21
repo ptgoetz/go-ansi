@@ -10,7 +10,7 @@ import (
 func main() {
 	c := ansi.NewConsole(os.Stdout)
 
-	panel := component.NewPanelWithLabel("FATAL", "ACCESS DENIED!", -1, 5)
+	panel := component.NewPanelWithLabel("FATAL", "REACTTOR BREACH!", -1, 5)
 
 	panel.BorderColor = color.Red
 	panel.Render(c)
@@ -26,7 +26,7 @@ func main() {
 	panel.Render(c)
 
 	panel.BorderColor = color.CornflowerBlue
-	panel.Message = "It would be cool"
+	panel.Message = "That would be cool"
 	panel.Label = "INFO"
 	panel.Render(c)
 
