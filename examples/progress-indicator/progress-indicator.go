@@ -3,13 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/ptgoetz/go-ansi/pkg/ansi"
-	"github.com/ptgoetz/go-ansi/pkg/ansi/component"
 	"os"
 	"time"
 )
 
 func main() {
-	component.DemoProgressPercent()
+	demoProgressPercent()
 }
 
 func demoProgressPercent() {

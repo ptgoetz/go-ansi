@@ -14,5 +14,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Hello %s\n", s)
+	var age int
+	_, err = console.Prompt("What's your age?: ", &age)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Hello %s. You are %d years old.\n", s, age)
 }

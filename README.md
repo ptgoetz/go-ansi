@@ -28,5 +28,37 @@ formatting.
 * Higher-level, reusable components/widgets such as colorized loggers, CLI applications, etc.
 * Plenty of examples for developers to learn from and extend.
 
+## Examples
+The [examples](examples/) Directory provides some example usage:
+
+### Panels
+
+```shell
+ go run examples/panel/panel.go
+```
+
+### Progress Indicator
+
+```shell
+ go run examples/progress-indicator/progress-indicator.go
+```
+
+### Prompts
+
+```shell
+ go run examples/prompt/prompt.go
+```
+
+### Terminal Screensaver
+
+```shell
+ go run examples/terminal-screensaver/terminal-screensaver.go
+```
+
+### Terminal Dimensions
+
+```shell
+go run examples/unix-info/unix-info.go
+```
 ## Resources
 [http://rrbrandt.dee.ufcg.edu.br/en/docs/ansi/cursor](http://rrbrandt.dee.ufcg.edu.br/en/docs/ansi/cursor)
